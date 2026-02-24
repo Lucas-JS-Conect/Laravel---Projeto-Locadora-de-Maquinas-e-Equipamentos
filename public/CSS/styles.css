@@ -1,0 +1,291 @@
+/* Geral */
+* {
+    font-family: 'Roboto';
+}
+
+body {
+    min-height: 100;
+    padding-bottom: 100px;
+    position: relative;
+}
+
+header {
+    background-color: #FFF;
+    border-bottom: 1px solid #CCC;
+}
+
+.row {
+    margin: 0;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.btn-primary {
+    background-color: #F2A340;
+    border: 2px solid #C28008;
+}
+
+.btn-primary:hover {
+    background-color: #C28008;
+    border-color: #C28008;
+}
+
+.msg {
+    background-color: #b0f786;
+    color: #155724;
+    border: 1px solid #C3E6CB;
+    width: 100%;
+    margin-bottom: 0;
+    text-align: center;
+    padding: 10px;
+}
+
+#info-container .already-joined-msg {
+    margin: 15px 0;
+    color: #004085;
+    background-color: #CCE5FF;
+    border: 1px solid #B8DAFF;
+    padding: 10px;
+    width: 275px;
+}
+
+/* navbar */
+
+#navbar img {
+    width: 75px;
+}
+
+#navbar {
+    justify-content: space-between;
+    background-color: #FFF;
+    padding: 5px 0;
+}
+
+#navbar a {
+    font-size: 14px;
+    padding: 14px 16px;
+    color: #757575;
+}
+
+#navbar a:hover {
+    color: #F2A340;
+}
+
+.suspenso {
+    float: left;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 14px;
+    border: none;
+    outline: none;
+    color: #757575;
+    padding: 14px 16px;
+    background-color: #FFF;
+    font-family: inherit;
+    margin: 0;
+}
+
+.navbar a:hover,
+.dropdown:hover .dropbtn {
+    color: #F2A340;
+    background-color: #FFF;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px #FFF;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    float: none;
+    color: #F2A340;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {
+    background-color: #FFF;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Search container */
+
+#search-container {
+    background-image: url("../img/Banner.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    padding: 50px;
+    text-align: center;
+}
+
+#search-container h1 {
+    color: #ff7b00;
+    margin-bottom: 30px;
+    font-weight: 900;
+}
+
+#search-container form {
+    width: 50%;
+    margin: 0 auto;
+}
+
+/* Machines Catalogo */
+
+#machines-container {
+    padding: 50px;
+}
+
+#machines-container h2 {
+    margin-bottom: 10px;
+}
+
+#machines-container .subtitle {
+    color: #757575;
+    margin-bottom: 30px;
+}
+
+#cards-container {
+    display: flex;
+}
+
+#machines-container .card {
+    flex: 1 1 24%;
+    max-width: 25%;
+    border-radius: 10px;
+    padding: 0;
+    margin: .5%;
+}
+
+#machines-container img {
+    max-width: 150px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card .card-date {
+    font-size: 12px;
+    color: #CCC;
+}
+
+.card .card-title {
+    color: #212121;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.card .card-machine {
+    font-size: 14px;
+    color: #757575;
+}
+
+/* Machine Cadastro */
+
+#machine-create-container {
+    padding: 30px;
+}
+
+#machine-create-container h1 {
+    text-align: center;
+}
+
+#machine-create-container label {
+    font-weight: bold;
+}
+
+#machine-create-container input,
+#machine-create-container select,
+#machine-create-container textarea {
+    font-size: 12px;
+}
+
+/* Machine Pagina*/
+
+#image-container,
+#info-container {
+    margin-top: 30px;
+}
+
+#image-container img {
+    border-radius: 10px;
+}
+
+#info-container h1 {
+    font-size: 36px;
+    font-weight: 900;
+}
+
+#info-container p {
+    margin: 0;
+    font-size: 14px;
+    display: flex;
+}
+
+#info-container h3,
+#description-container h3 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#info-container ion-icon {
+    font-size: 20px;
+    color: #F2A340;
+    margin-right: 5px;
+}
+
+#info-container #machine-submit {
+    margin: 20px 0;
+}
+
+/* Dashboard */
+
+.dashboard-title-container {
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+
+.dashboard-machines-container th {
+    width: 25%;
+}
+
+.dashboard-machines-container form {
+    display: inline-block;
+}
+
+/* Edit page */
+
+.img-preview {
+    width: 100px;
+    margin-top: 20px;
+}
+
+/* Footer */
+
+footer {
+    text-align: center;
+    background-color: #353E48;
+    color: #FFF;
+    padding: 30px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin-bottom: 0;
+}
