@@ -1,0 +1,7 @@
+.git
+node_modules
+vendor
+.env
+.env.*         # qualquer .env de backup
+npm-debug.log
+yarn-error.log
