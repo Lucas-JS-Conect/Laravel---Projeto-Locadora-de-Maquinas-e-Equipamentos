@@ -1,4 +1,4 @@
-# 1️⃣ Imagem base do PHP com extensões necessárias
+# 1️⃣ Imagem base
 FROM php:8.2-fpm
 
 # 2️⃣ Instalar dependências do sistema
@@ -6,32 +6,33 @@ RUN apt-get update && apt-get install -y \
     git \
     unzip \
     curl \
+    libpq-dev \
     libzip-dev \
-    libonig-dev \
     nodejs \
     npm \
-    && docker-php-ext-install pdo_mysql zip mbstring bcmath
+    && docker-php-ext-install pdo pdo_pgsql zip
 
-# 3️⃣ Configurar diretório de trabalho
+# 3️⃣ Instalar Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# 4️⃣ Definir diretório
 WORKDIR /var/www/html
 
-# 4️⃣ Copiar composer.json e composer.lock e instalar dependências PHP
-COPY composer.json composer.lock ./
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install --no-dev --optimize-autoloader
-
-# 5️⃣ Copiar todo o código do Laravel
+# 5️⃣ Copiar TODO o projeto primeiro
 COPY . .
 
-# 6️⃣ Instalar dependências Node e build do Vite
+# 6️⃣ Instalar dependências PHP
+RUN composer install --no-dev --optimize-autoloader
+
+# 7️⃣ Instalar Node e gerar build do Vite
 RUN npm install
 RUN npm run build
 
-# 7️⃣ Ajustar permissões
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# 8️⃣ Permissões
+RUN chown -R www-data:www-data storage bootstrap/cache
 
-# 8️⃣ Expor porta (para PHP-FPM, render irá mapear automaticamente)
-EXPOSE 9000
+# 9️⃣ Expor porta
+EXPOSE 8000
 
-# 9️⃣ Comando para rodar PHP-FPM
-CMD ["php-fpm"]
+# 🔟 Rodar Laravel
+CMD php artisan serve --host=0.0.0.0 --port=8000
