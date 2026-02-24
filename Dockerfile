@@ -1,31 +1,37 @@
-# 1. Imagem base com PHP 8.2
+# 1️⃣ Imagem base do PHP com extensões necessárias
 FROM php:8.2-fpm
 
-# 2. Instalar dependências do sistema e extensões PHP
+# 2️⃣ Instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
-    git unzip curl libpq-dev nodejs npm \
-    && docker-php-ext-install pdo pdo_pgsql
+    git \
+    unzip \
+    curl \
+    libzip-dev \
+    libonig-dev \
+    nodejs \
+    npm \
+    && docker-php-ext-install pdo_mysql zip mbstring bcmath
 
-# 3. Configurar diretório de trabalho
+# 3️⃣ Configurar diretório de trabalho
 WORKDIR /var/www/html
 
-# 4. Copiar arquivos do projeto
+# 4️⃣ Copiar composer.json e composer.lock e instalar dependências PHP
+COPY composer.json composer.lock ./
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-dev --optimize-autoloader
+
+# 5️⃣ Copiar todo o código do Laravel
 COPY . .
 
-# 5. Instalar dependências do PHP e Node
-RUN composer install --no-dev --optimize-autoloader
+# 6️⃣ Instalar dependências Node e build do Vite
 RUN npm install
-
-# 6. Build dos assets do Vite
 RUN npm run build
 
-# 7. Otimizações do Laravel
-RUN php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
+# 7️⃣ Ajustar permissões
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# 8. Expor porta 8000
-EXPOSE 8000
+# 8️⃣ Expor porta (para PHP-FPM, render irá mapear automaticamente)
+EXPOSE 9000
 
-# 9. Comando para iniciar o servidor Laravel
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+# 9️⃣ Comando para rodar PHP-FPM
+CMD ["php-fpm"]
