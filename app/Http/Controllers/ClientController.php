@@ -21,21 +21,24 @@ class ClientController extends Controller
         return view('clients.create', compact('users'));
     }
 
-    public function store(Request $request)
-    {
-        $validator = $this->validateClientRequest($request);
+   public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|max:255',
+        'email' => 'required|email|unique:clients,email',
+        'phone' => 'required|max:20',
+        'cpf_cnpj' => 'required|unique:clients,cpf_cnpj',
+        'gender' => 'required|in:male,female',
+        'birth_date' => 'required|date',
+        'address' => 'required|max:255',
+        'occupation' => 'required|max:255',
+        'user_id' => 'required|exists:users,id',
+    ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput($request->all());
-        }
+    Client::create($request->all());
 
-        $client = new Client($request->all());
-        $client->save();
-
-        return redirect('/clients')->with('success', 'Cliente cadastrado com sucesso!');
-    }
+    return redirect('/clients')->with('success', 'Cliente cadastrado com sucesso!');
+}
 
     public function edit($id)
     {
@@ -44,26 +47,32 @@ class ClientController extends Controller
         return view('clients.edit', compact('client', 'users'));
     }
 
-    public function update(Request $request, Client $client)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'cpf_cnpj' => 'required|string|max:20',
-            'phone' => 'required|string|max:15',
-            'birth_date' => 'required|date',
-            'gender' => 'required|string',
-            'address' => 'required|string|max:255',
-            'occupation' => 'required|string|max:255',
-        ]);
+   public function update(Request $request, Client $client)
+{
+    $request->validate([
+        'name' => 'required|max:255',
+        'email' => [
+            'required',
+            'email',
+            Rule::unique('clients')->ignore($client->id),
+        ],
+        'cpf_cnpj' => [
+            'required',
+            Rule::unique('clients')->ignore($client->id),
+        ],
+        'phone' => 'required|max:20',
+        'birth_date' => 'required|date',
+        'gender' => 'required|in:male,female',
+        'address' => 'required|max:255',
+        'occupation' => 'required|max:255',
+        'user_id' => 'required|exists:users,id',
+    ]);
 
-        try {
-            $client->update($request->all());
-            return redirect()->route('clients.index')->with('success', 'Cliente atualizado com sucesso!');
-        } catch (\Exception $e) {
-            return redirect()->route('clients.index')->with('error', 'Erro ao atualizar o cliente: ' . $e->getMessage());
-        }
-    }
+    $client->update($request->all());
+
+    return redirect()->route('clients.index')
+        ->with('success', 'Cliente atualizado com sucesso!');
+}
 
     public function index()
     {
